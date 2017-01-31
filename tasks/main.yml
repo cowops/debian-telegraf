@@ -17,7 +17,5 @@
   template: src=telegraf.conf.j2 dest=/etc/telegraf/telegraf.conf
   notify: restart telegraf
 
-- systemd:
-    name: enable telegraf on boot
-    enabled: yes
-    masked: no
+- name: enable telegraf on boot
+  systemd: name=telegraf enabled=yes masked=no
