@@ -1,0 +1,6 @@
+---
+- name: start telegraf
+  action: service name=telegraf state=started enabled=yes
+
+- name: restart telegraf
+  action: service name=telegraf state=restarted enabled=yes

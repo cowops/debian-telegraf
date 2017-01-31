@@ -1,0 +1,4 @@
+telegraf:
+  version: 1.2.0
+  database: 'telegraf'
+  url: 'http://localhost:8086'

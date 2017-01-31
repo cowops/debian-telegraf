@@ -1,0 +1,23 @@
+---
+- name: check telegraf existence
+  stat: path=/etc/init.d/telegraf
+  register: telegraf_binary
+  ignore_errors: True
+
+- name: download telegraf archive
+  get_url: url=https://dl.influxdata.com/telegraf/releases/telegraf_{{ telegraf.version }}_amd64.deb dest=/tmp/telegraf.deb
+  when: not telegraf_binary.stat.exists
+
+- name: install telegraf packages
+  apt: deb=/tmp/telegraf.deb
+  when: not telegraf_binary.stat.exists
+  notify: start telegraf
+
+# - name: copy telegraf conf
+#   template: src=config.j2 dest=/opt/telegraf/shared/config.toml
+#   notify: restart telegraf
+
+- systemd:
+    name: telegraf
+    enabled: yes
+    masked: no
